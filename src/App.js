@@ -7,6 +7,8 @@ import signup from "./pages/signup";
 import Navbar from "./components/Navbar";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
+import jwtDecode from "jwt-decode";
+import AuthRoute from "./util/AuthRoute";
 
 const theme = createMuiTheme({
   palette: {
@@ -23,7 +25,30 @@ const theme = createMuiTheme({
       contrastText: "#000",
     },
   },
+  spreadThis: {
+    formContainer: {
+      textAlign: "center",
+    },
+    pageTitle: { margin: "20px auto" },
+    textField: { margin: 10 },
+    button: { margin: 10, padding: 10, position: "relative" },
+    customError: { margin: 10 },
+    progress: { position: "absolute" },
+  },
 });
+
+let authenticated;
+const token = localStorage.IdToken;
+if (token) {
+  const decodedToken = jwtDecode(token);
+  console.log(decodedToken);
+  if (decodedToken.exp * 1000 < Date.now()) {
+    window.location.href = "/login";
+    authenticated = false;
+  } else {
+    authenticated = true;
+  }
+}
 
 const App = () => {
   return (
@@ -34,8 +59,18 @@ const App = () => {
             <Navbar />
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route exact path="/login" component={login} />
-              <Route exact path="/signup" component={signup} />
+              <AuthRoute
+                exact
+                path="/login"
+                component={login}
+                authenticated={authenticated}
+              />
+              <AuthRoute
+                exact
+                path="/signup"
+                component={signup}
+                authenticated={authenticated}
+              />
             </Switch>
           </div>
         </BrowserRouter>
