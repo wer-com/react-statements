@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <AppBar color="inherit">
+    <AppBar color="secondary">
       <ToolBar className="nav-container">
         <Button color="inherit" component={Link} to="/">
           Home
