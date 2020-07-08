@@ -5,43 +5,30 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../actions/userActions";
 
 const styles = (theme) => ({
   ...theme.spreadThis,
 });
 
 const Login = (props) => {
+  const dispatch = useDispatch();
+  const UI = useSelector((state) => state.UI);
   const { classes } = props;
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
-    loading: false,
-    errors: {},
   });
   const submitHandler = (e) => {
     e.preventDefault();
-    setCredentials({ ...credentials, loading: true });
     const userData = {
       email: credentials.email,
       password: credentials.password,
     };
-    axios
-      .post("/login", userData)
-      .then((result) => {
-        localStorage.setItem("IdToken", `Bearer ${result.data.token}`);
-        setCredentials({ ...credentials, loading: false });
-        props.history.push("/");
-      })
-      .catch((err) => {
-        setCredentials({
-          ...credentials,
-          errors: err.response.data,
-          loading: false,
-        });
-      });
+    dispatch(loginUser(userData, props.history));
   };
   const inputHandler = (e) => {
     const { name, value } = e.target;
@@ -60,8 +47,8 @@ const Login = (props) => {
             name="email"
             type="email"
             label="email"
-            helperText={credentials.errors.email}
-            error={credentials.errors.email ? true : false}
+            helperText={UI.errors.email}
+            error={UI.errors.email ? true : false}
             className={classes.textField}
             value={credentials.email}
             onChange={inputHandler}
@@ -72,16 +59,20 @@ const Login = (props) => {
             name="password"
             type="password"
             label="password"
-            helperText={credentials.errors.password}
-            error={credentials.errors.password ? true : false}
+            helperText={UI.errors.password}
+            error={UI.errors.password ? true : false}
             className={classes.textField}
             value={credentials.password}
             onChange={inputHandler}
             fullWidth
           />
-          {credentials.errors.error && (
-            <Typography className={classes.customError} variant="body2">
-              {credentials.errors.error}
+          {UI.errors.error && (
+            <Typography
+              color={"error"}
+              className={classes.customError}
+              variant="body2"
+            >
+              {UI.errors.error}
             </Typography>
           )}
           <Button
@@ -89,10 +80,10 @@ const Login = (props) => {
             variant="contained"
             color="secondary"
             className={classes.button}
-            disabled={credentials.loading}
+            disabled={UI.loading}
           >
             Log In
-            {credentials.loading && (
+            {UI.loading && (
               <CircularProgress size={23} className={classes.progress} />
             )}
           </Button>

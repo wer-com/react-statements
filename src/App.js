@@ -9,6 +9,8 @@ import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import jwtDecode from "jwt-decode";
 import AuthRoute from "./util/AuthRoute";
+import { Provider } from "react-redux";
+import store from "./store";
 
 const theme = createMuiTheme({
   palette: {
@@ -53,7 +55,7 @@ if (token) {
 const App = () => {
   return (
     <MuiThemeProvider theme={theme}>
-      <div className="App">
+      <Provider store={store}>
         <BrowserRouter>
           <div className="container">
             <Navbar />
@@ -74,7 +76,7 @@ const App = () => {
             </Switch>
           </div>
         </BrowserRouter>
-      </div>
+      </Provider>
     </MuiThemeProvider>
   );
 };

@@ -8,6 +8,8 @@ import Button from "@material-ui/core/Button";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { useDispatch, useSelector } from "react-redux";
+import { signupUser } from "../actions/userActions";
 
 const styles = (theme) => ({
   ...theme.spreadThis,
@@ -15,13 +17,13 @@ const styles = (theme) => ({
 
 const Signup = (props) => {
   const { classes } = props;
+  const dispatch = useDispatch();
+  const UI = useSelector((state) => state.UI);
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
     confirmPassword: "",
     handle: "",
-    loading: false,
-    errors: {},
   });
   const submitHandler = (e) => {
     e.preventDefault();
@@ -32,20 +34,7 @@ const Signup = (props) => {
       confirmPassword: credentials.confirmPassword,
       handle: credentials.handle,
     };
-    axios
-      .post("/signup", userData)
-      .then((result) => {
-        localStorage.setItem("IdToken", `Bearer ${result.data.token}`);
-        setCredentials({ ...credentials, loading: false });
-        props.history.push("/");
-      })
-      .catch((err) => {
-        setCredentials({
-          ...credentials,
-          errors: err.response.data,
-          loading: false,
-        });
-      });
+    dispatch(signupUser(userData, props.history));
   };
   const inputHandler = (e) => {
     const { name, value } = e.target;
@@ -64,8 +53,8 @@ const Signup = (props) => {
             name="email"
             type="email"
             label="email"
-            helperText={credentials.errors.email}
-            error={credentials.errors.email ? true : false}
+            helperText={UI.errors.email}
+            error={UI.errors.email ? true : false}
             className={classes.textField}
             value={credentials.email}
             onChange={inputHandler}
@@ -76,8 +65,8 @@ const Signup = (props) => {
             name="password"
             type="password"
             label="password"
-            helperText={credentials.errors.password}
-            error={credentials.errors.password ? true : false}
+            helperText={UI.errors.password}
+            error={UI.errors.password ? true : false}
             className={classes.textField}
             value={credentials.password}
             onChange={inputHandler}
@@ -88,8 +77,8 @@ const Signup = (props) => {
             name="confirmPassword"
             type="password"
             label="confirm password"
-            helperText={credentials.errors.confirmPassword}
-            error={credentials.errors.confirmPassword ? true : false}
+            helperText={UI.errors.confirmPassword}
+            error={UI.errors.confirmPassword ? true : false}
             className={classes.textField}
             value={credentials.confirmPassword}
             onChange={inputHandler}
@@ -100,16 +89,16 @@ const Signup = (props) => {
             name="handle"
             type="text"
             label="handle"
-            helperText={credentials.errors.handle}
-            error={credentials.errors.handle ? true : false}
+            helperText={UI.errors.handle}
+            error={UI.errors.handle ? true : false}
             className={classes.textField}
             value={credentials.handle}
             onChange={inputHandler}
             fullWidth
           />
-          {credentials.errors.error && (
+          {UI.errors.error && (
             <Typography className={classes.customError} variant="body2">
-              {credentials.errors.error}
+              {UI.errors.error}
             </Typography>
           )}
           <Button
@@ -117,10 +106,10 @@ const Signup = (props) => {
             variant="contained"
             color="secondary"
             className={classes.button}
-            disabled={credentials.loading}
+            disabled={UI.loading}
           >
             Sign Up
-            {credentials.loading && (
+            {UI.loading && (
               <CircularProgress size={23} className={classes.progress} />
             )}
           </Button>

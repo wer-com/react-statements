@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import Statement from "../components/Statement";
+import Profile from "../components/Profile";
 
 const Home = () => {
   const [statements, setStatements] = useState([]);
