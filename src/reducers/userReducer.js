@@ -10,6 +10,7 @@ const initState = {
   credentials: {},
   likes: [],
   notifications: [],
+  loading: false,
 };
 
 export default function (state = initState, { type, payload }) {
@@ -22,7 +23,7 @@ export default function (state = initState, { type, payload }) {
     case SET_UNAUTHENTICATED:
       return initState;
     case SET_USER:
-      return { authenticated: true, ...payload, loading: false };
+      return { authenticated: true, loading: false, ...payload };
     case LOADING_USER:
       return { ...state, loading: true };
     default:

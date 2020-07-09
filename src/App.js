@@ -11,6 +11,9 @@ import jwtDecode from "jwt-decode";
 import AuthRoute from "./util/AuthRoute";
 import { Provider } from "react-redux";
 import store from "./store";
+import { getUserData, logoutUser } from "./actions/userActions";
+import { SET_AUTHENTICATED } from "./types";
+import axios from "axios";
 
 const theme = createMuiTheme({
   palette: {
@@ -39,16 +42,17 @@ const theme = createMuiTheme({
   },
 });
 
-let authenticated;
 const token = localStorage.IdToken;
 if (token) {
   const decodedToken = jwtDecode(token);
   console.log(decodedToken);
   if (decodedToken.exp * 1000 < Date.now()) {
     window.location.href = "/login";
-    authenticated = false;
+    store.dispatch(logoutUser);
   } else {
-    authenticated = true;
+    store.dispatch({ type: SET_AUTHENTICATED });
+    axios.defaults.headers.common["Authorization"] = token;
+    store.dispatch(getUserData());
   }
 }
 
@@ -61,18 +65,8 @@ const App = () => {
             <Navbar />
             <Switch>
               <Route exact path="/" component={Home} />
-              <AuthRoute
-                exact
-                path="/login"
-                component={login}
-                authenticated={authenticated}
-              />
-              <AuthRoute
-                exact
-                path="/signup"
-                component={signup}
-                authenticated={authenticated}
-              />
+              <AuthRoute exact path="/login" component={login} />
+              <AuthRoute exact path="/signup" component={signup} />
             </Switch>
           </div>
         </BrowserRouter>

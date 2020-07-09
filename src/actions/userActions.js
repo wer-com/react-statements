@@ -14,7 +14,7 @@ export const loginUser = (userData, history) => (dispatch) => {
     .post("/login", userData)
     .then((result) => {
       setAuthorizationHeader(result.data.token);
-      dispatch(() => getUserData());
+      dispatch(getUserData());
       dispatch({ type: CLEAR_ERRORS });
       history.push("/");
     })
@@ -29,7 +29,7 @@ export const signupUser = (userData, history) => (dispatch) => {
     .post("/signup", userData)
     .then((result) => {
       setAuthorizationHeader(result.data.token);
-      dispatch(() => getUserData());
+      dispatch(getUserData());
       dispatch({ type: CLEAR_ERRORS });
       history.push("/");
     })
@@ -58,4 +58,14 @@ const setAuthorizationHeader = (token) => {
   const IdToken = `Bearer ${token}`;
   localStorage.setItem("IdToken", IdToken);
   axios.defaults.headers.common["Authorization"] = IdToken;
+};
+
+export const uploadImage = (formData) => (dispatch) => {
+  dispatch({ type: LOADING_USER });
+  axios
+    .post("/user/image", formData)
+    .then(() => {
+      dispatch(getUserData());
+    })
+    .catch((err) => console.log(err));
 };
