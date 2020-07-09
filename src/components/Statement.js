@@ -33,7 +33,6 @@ const Statement = (props) => {
     commentCount,
     userHandle,
   } = statement;
-  console.log(props);
   dayjs.extend(relativeTime);
   return (
     <Card className={classes.card}>

@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Button from "@material-ui/core/Button";
 import { useSelector } from "react-redux";
@@ -11,20 +10,27 @@ import LocationOn from "@material-ui/icons/LocationOn";
 import LinkIcon from "@material-ui/icons/Link";
 import CalendarToday from "@material-ui/icons/CalendarToday";
 import dayjs from "dayjs";
-import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
-import Tooltip from "@material-ui/core/Tooltip";
+import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
 import { useDispatch } from "react-redux";
-import { uploadImage } from "../actions/userActions";
+import { uploadImage, logoutUser } from "../actions/userActions";
+import EditDetails from "./EditDetails";
+import PatternButton from "../util/PatternButton";
 
 const styles = {
-  "profile-image": {
-    height: 200,
+  profileImage: {
+    width: 200,
   },
 };
 
 const Profile = (props) => {
+  const dispatch = useDispatch();
+
   const user = useSelector((state) => state.user);
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+  };
 
   const handleImageChange = (event) => {
     const image = event.target.files[0];
@@ -46,12 +52,8 @@ const Profile = (props) => {
     createdAt,
     imageUrl,
   } = user.credentials;
-  console.log(user);
 
   const { loading, authenticated } = user;
-
-  const dispatch = useDispatch();
-
   const { classes } = props;
 
   let profileMarkup = !loading ? (
@@ -83,18 +85,24 @@ const Profile = (props) => {
       <Paper className={classes.paper}>
         <div className={classes.profile}>
           <div className="profile-image">
-            <img src={imageUrl} alt="profile" className="profile-image" />
+            <img
+              src={imageUrl}
+              alt="profile"
+              className={classes.profileImage}
+            />
             <input
               type="file"
               id="imageInput"
               hidden="hidden"
               onChange={handleImageChange}
             />
-            <Tooltip title="change profile picture" placement="top">
-              <IconButton onClick={handleEditPicture} className="button">
-                <EditIcon color="secondary" />
-              </IconButton>
-            </Tooltip>
+            <PatternButton
+              tip="change profile picture"
+              onClick={handleEditPicture}
+              btnClassName="button"
+            >
+              <EditIcon color="secondary" />
+            </PatternButton>
           </div>
           <hr />
           <div className="profile-details">
@@ -110,32 +118,30 @@ const Profile = (props) => {
             <hr />
             {location && (
               <Fragment>
-                <LocationOn color="primary">
-                  <span>{location}</span>
-                </LocationOn>
+                <LocationOn color="primary"></LocationOn>
+                <span>{location}</span>
                 <hr />
               </Fragment>
             )}
             {website && (
               <Fragment>
-                <LinkIcon color="primary">
-                  <a href={website} target="_blank" rel="noopener noreferrer">
-                    {"  "} {website}
-                  </a>
-                </LinkIcon>
+                <LinkIcon color="primary"></LinkIcon>
+                <a href={website} target="_blank" rel="noopener noreferrer">
+                  {"  "} {website}
+                </a>
                 <hr />
               </Fragment>
             )}
-            {createdAt && (
-              <Fragment>
-                <CalendarToday color="primary">
-                  {" "}
-                  <span>Joined {dayjs(createdAt).format("MMM YYYY")}</span>
-                </CalendarToday>
-                <hr />
-              </Fragment>
-            )}
+            <Fragment>
+              <CalendarToday color="primary" />{" "}
+              <span>Joined {dayjs(createdAt).format("MMM YYYY")}</span>
+              <hr />
+            </Fragment>
           </div>
+          <PatternButton tip="log out" onClick={handleLogout}>
+            <KeyboardReturn color="secondary" />
+          </PatternButton>
+          <EditDetails />
         </div>
       </Paper>
     )

@@ -45,7 +45,6 @@ const theme = createMuiTheme({
 const token = localStorage.IdToken;
 if (token) {
   const decodedToken = jwtDecode(token);
-  console.log(decodedToken);
   if (decodedToken.exp * 1000 < Date.now()) {
     window.location.href = "/login";
     store.dispatch(logoutUser);
