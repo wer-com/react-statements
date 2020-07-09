@@ -3,25 +3,24 @@ import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import Statement from "../components/Statement";
 import Profile from "../components/Profile";
+import { useDispatch, useSelector } from "react-redux";
+import { getStatements } from "../actions/dataActions";
 
 const Home = () => {
-  const [statements, setStatements] = useState([]);
+  const dispatch = useDispatch();
+  const statement = useSelector((state) => state.data);
+  console.log(statement);
+  const { loading, statements } = statement;
   useEffect(() => {
-    axios
-      .get("/statements")
-      .then((result) => {
-        setStatements(result.data);
-      })
-      .catch((err) => console.log(err));
+    dispatch(getStatements());
   }, []);
-  let recentStatementsMarkup =
-    statements.length > 0 ? (
-      statements.map((statement) => (
-        <Statement key={statement.statementId} statement={statement} />
-      ))
-    ) : (
-      <p>Loading ... </p>
-    );
+  let recentStatementsMarkup = !loading ? (
+    statements.map((statement) => (
+      <Statement key={statement.statementId} statement={statement} />
+    ))
+  ) : (
+    <p>Loading ... </p>
+  );
   return (
     <Grid container spacing={2}>
       <Grid item sm={8} xs={12}>

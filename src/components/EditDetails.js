@@ -11,6 +11,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
 import { useDispatch, useSelector } from "react-redux";
+import PatternButton from "../util/PatternButton";
 
 const styles = (theme) => ({ ...theme.spreadThis });
 
@@ -63,11 +64,13 @@ const EditDetails = (props) => {
   }, []);
   return (
     <Fragment>
-      <Tooltip title="edit details">
-        <IconButton onClick={handleOpen} className={classes.button}>
-          <EditIcon color="secondary"></EditIcon>
-        </IconButton>
-      </Tooltip>
+      <PatternButton
+        tip="edit details"
+        onClick={handleOpen}
+        btnClassName={classes.button}
+      >
+        <EditIcon color="secondary"></EditIcon>
+      </PatternButton>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
         <DialogTitle>Edit your details</DialogTitle>
         <DialogContent>

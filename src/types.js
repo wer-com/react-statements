@@ -5,6 +5,10 @@ export const LOADING_USER = "LOADING_USER";
 
 export const SET_ERRORS = "SET_ERRORS";
 export const LOADING_UI = "LOADING_UI";
+export const LOADING_DATA = "LOADING_DATA";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 
-export const SET_ER2RORS = "SET_ER2RORS";
+export const SET_STATEMENTS = "SET_STATEMENTS";
+export const SET_STATEMENT = "SET_STATEMENT";
+export const LIKE_STATEMENT = "LIKE_STATEMENT";
+export const UNLIKE_STATEMENT = "UNLIKE_STATEMENT";
