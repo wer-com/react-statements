@@ -111,8 +111,9 @@ const Profile = (props) => {
               to={`/users/${handle}`}
               color="primary"
               variant="h5"
-            />
-            @{handle}
+            >
+              @{handle}
+            </MuiLink>
             <hr />
             {bio && <Typography variant="body1">{bio}</Typography>}
             <hr />

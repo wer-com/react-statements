@@ -3,6 +3,7 @@ import {
   LOADING_DATA,
   LIKE_STATEMENT,
   UNLIKE_STATEMENT,
+  DELETE_STATEMENT,
 } from "../types";
 import axios from "axios";
 
@@ -29,5 +30,12 @@ export const unlikeStatement = (statementId) => (dispatch) => {
   axios
     .get(`/statement/${statementId}/unlike`)
     .then((res) => dispatch({ type: UNLIKE_STATEMENT, payload: res.data }))
+    .catch((err) => console.log(err));
+};
+
+export const deleteStatement = (statementId) => (dispatch) => {
+  axios
+    .delete(`/statement/${statementId}`)
+    .then(() => dispatch({ type: DELETE_STATEMENT, payload: statementId }))
     .catch((err) => console.log(err));
 };

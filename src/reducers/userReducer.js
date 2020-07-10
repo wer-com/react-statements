@@ -40,7 +40,7 @@ export default function (state = initState, { type, payload }) {
       return {
         ...state,
         likes: state.likes.filter(
-          (like) => like.statementId === payload.statementId
+          (like) => like.statementId !== payload.statementId
         ),
       };
     default:

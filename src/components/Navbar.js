@@ -5,9 +5,9 @@ import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import PatternButton from "../util/PatternButton";
-import AddIcon from "@material-ui/icons/Add";
 import HomeIcon from "@material-ui/icons/Home";
 import Notifications from "@material-ui/icons/Notifications";
+import CreateStatement from "./CreateStatement";
 
 const Navbar = () => {
   const user = useSelector((state) => state.user);
@@ -17,9 +17,7 @@ const Navbar = () => {
       <ToolBar className="nav-container">
         {authenticated ? (
           <Fragment>
-            <PatternButton tip="Create a Statment">
-              <AddIcon color="primary" />
-            </PatternButton>
+            <CreateStatement />
             <Link to="/">
               <PatternButton tip="Home">
                 <HomeIcon color="primary" />

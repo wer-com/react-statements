@@ -1,8 +1,9 @@
-import { createStore, combineReducers, applyMiddleware, compose } from "redux";
+import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import userReducers from "./reducers/userReducer";
 import dataReducers from "./reducers/dataReducer";
 import uiReducers from "./reducers/uiReducer";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 const initState = {};
 
@@ -17,7 +18,7 @@ const reducers = combineReducers({
 const store = createStore(
   reducers,
   initState,
-  compose(applyMiddleware(...middleware))
+  composeWithDevTools(applyMiddleware(...middleware))
 );
 
 export default store;

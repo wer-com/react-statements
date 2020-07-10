@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { editUserDetails } from "../actions/userActions";
-import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -9,7 +8,6 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import EditIcon from "@material-ui/icons/Edit";
-import IconButton from "@material-ui/core/IconButton";
 import { useDispatch, useSelector } from "react-redux";
 import PatternButton from "../util/PatternButton";
 
@@ -61,6 +59,7 @@ const EditDetails = (props) => {
 
   useEffect(() => {
     setUserInfo(credentials);
+    // eslint-disable-next-line
   }, []);
   return (
     <Fragment>
@@ -69,7 +68,7 @@ const EditDetails = (props) => {
         onClick={handleOpen}
         btnClassName={classes.button}
       >
-        <EditIcon color="secondary"></EditIcon>
+        <EditIcon color="secondary" />
       </PatternButton>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
         <DialogTitle>Edit your details</DialogTitle>

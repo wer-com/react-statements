@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
-import axios from "axios";
 import Statement from "../components/Statement";
 import Profile from "../components/Profile";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,10 +8,10 @@ import { getStatements } from "../actions/dataActions";
 const Home = () => {
   const dispatch = useDispatch();
   const statement = useSelector((state) => state.data);
-  console.log(statement);
   const { loading, statements } = statement;
   useEffect(() => {
     dispatch(getStatements());
+    // eslint-disable-next-line
   }, []);
   let recentStatementsMarkup = !loading ? (
     statements.map((statement) => (
