@@ -10,6 +10,7 @@ import {
   SET_ERRORS,
   SET_STATEMENT,
   STOP_LOADING,
+  SUBMIT_COMMENT,
 } from "../types";
 import axios from "axios";
 
@@ -70,4 +71,14 @@ export const getStatement = (statementId) => (dispatch) => {
       dispatch({ type: STOP_LOADING });
     })
     .catch((err) => console.log(err));
+};
+
+export const submitComment = (statementId, commentData) => (dispatch) => {
+  axios
+    .post(`/statement/${statementId}/comment`, commentData)
+    .then((res) => {
+      dispatch({ type: SUBMIT_COMMENT, payload: res.data });
+      dispatch({ type: CLEAR_ERRORS });
+    })
+    .catch((err) => dispatch({ type: SET_ERRORS, payload: err.response }));
 };

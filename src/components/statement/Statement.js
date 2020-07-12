@@ -14,6 +14,7 @@ import ChatIcon from "@material-ui/icons/Chat";
 import DeleteStatement from "./DeleteStatement";
 import DialogStatement from "./DialogStatement";
 import LikeButton from "./LikeButton";
+import PostComment from "./PostComment";
 
 const styles = {
   card: {
@@ -35,6 +36,7 @@ const Statement = (props) => {
   const dispatch = useDispatch();
 
   const { statement, classes } = props;
+  console.log(statement);
   const {
     body,
     createdAt,

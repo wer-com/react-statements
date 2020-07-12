@@ -20,6 +20,7 @@ import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { getStatement } from "../../actions/dataActions";
+import PostComment from "./PostComment";
 
 const DialogStatement = (props) => {
   const [open, setOpen] = useState(false);
@@ -75,6 +76,7 @@ const DialogStatement = (props) => {
         <span>{commentCount} Comments</span>
       </Grid>
       <hr />
+      <PostComment statementId={statementId} />
       <Comments comments={comments} />
     </Grid>
   );

@@ -6,6 +6,7 @@ import {
   DELETE_STATEMENT,
   POST_STATEMENT,
   SET_STATEMENT,
+  SUBMIT_COMMENT,
 } from "../types";
 
 const initState = {
@@ -43,6 +44,14 @@ export default function (state = initState, { payload, type }) {
       };
     case SET_STATEMENT:
       return { ...state, statement: payload };
+    case SUBMIT_COMMENT:
+      return {
+        ...state,
+        statement: {
+          ...state.statement,
+          comments: [payload, ...state.statement.comments],
+        },
+      };
     default:
       return state;
   }
