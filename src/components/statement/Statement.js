@@ -8,12 +8,12 @@ import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useSelector, useDispatch } from "react-redux";
-import { likeStatement, unlikeStatement } from "../actions/dataActions";
-import PatternButton from "../util/PatternButton";
+import { likeStatement, unlikeStatement } from "../../actions/dataActions";
+import PatternButton from "../../util/PatternButton";
 import ChatIcon from "@material-ui/icons/Chat";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import DeleteStatement from "./DeleteStatement";
+import DialogStatement from "./DialogStatement";
+import LikeButton from "./LikeButton";
 
 const styles = {
   card: {
@@ -47,43 +47,10 @@ const Statement = (props) => {
 
   dayjs.extend(relativeTime);
 
-  const likedStatement = () => {
-    if (
-      user.likes &&
-      user.likes.find((like) => like.statementId === statementId)
-    ) {
-      return true;
-    } else return false;
-  };
-
-  const likeStatmentFunc = () => {
-    dispatch(likeStatement(statementId));
-  };
-
-  const unlikeStatmentFunc = () => {
-    dispatch(unlikeStatement(statementId));
-  };
-
   const deleteButton =
     user.authenticated && user.credentials.handle === userHandle ? (
       <DeleteStatement statementId={statementId} />
     ) : null;
-
-  const likeButton = !user.authenticated ? (
-    <PatternButton tip="like">
-      <Link to="/login">
-        <FavoriteBorder color="secondary" />
-      </Link>
-    </PatternButton>
-  ) : likedStatement() ? (
-    <PatternButton tip="Undo Like" onClick={unlikeStatmentFunc}>
-      <FavoriteIcon color="secondary" />
-    </PatternButton>
-  ) : (
-    <PatternButton tip="Like" onClick={likeStatmentFunc}>
-      <FavoriteBorder color="secondary" />
-    </PatternButton>
-  );
 
   return (
     <Card className={classes.card}>
@@ -106,13 +73,14 @@ const Statement = (props) => {
           {dayjs(createdAt).fromNow()}
         </Typography>
         <Typography variant="body1">{body}</Typography>
-        {likeButton}
+        <LikeButton statementId={statementId} />
         <span>{likeCount} Likes</span>
         <PatternButton tip="comments">
           <ChatIcon color="secondary" />
         </PatternButton>
 
         <span>{commentCount} Comments</span>
+        <DialogStatement statementId={statementId} userHandle={userHandle} />
       </CardContent>
     </Card>
   );

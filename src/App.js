@@ -4,7 +4,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Home from "./pages/home";
 import login from "./pages/login";
 import signup from "./pages/signup";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/layout/Navbar";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import jwtDecode from "jwt-decode";

@@ -4,10 +4,10 @@ import ToolBar from "@material-ui/core/ToolBar";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import PatternButton from "../util/PatternButton";
+import PatternButton from "../../util/PatternButton";
 import HomeIcon from "@material-ui/icons/Home";
 import Notifications from "@material-ui/icons/Notifications";
-import CreateStatement from "./CreateStatement";
+import CreateStatement from "../statement/CreateStatement";
 
 const Navbar = () => {
   const user = useSelector((state) => state.user);

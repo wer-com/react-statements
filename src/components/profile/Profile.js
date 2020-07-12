@@ -13,9 +13,9 @@ import dayjs from "dayjs";
 import EditIcon from "@material-ui/icons/Edit";
 import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
 import { useDispatch } from "react-redux";
-import { uploadImage, logoutUser } from "../actions/userActions";
+import { uploadImage, logoutUser } from "../../actions/userActions";
 import EditDetails from "./EditDetails";
-import PatternButton from "../util/PatternButton";
+import PatternButton from "../../util/PatternButton";
 
 const styles = {
   profileImage: {

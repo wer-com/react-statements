@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
-import Statement from "../components/Statement";
-import Profile from "../components/Profile";
+import Statement from "../components/statement/Statement";
+import Profile from "../components/profile/Profile";
 import { useDispatch, useSelector } from "react-redux";
 import { getStatements } from "../actions/dataActions";
 

@@ -4,6 +4,8 @@ import {
   LIKE_STATEMENT,
   UNLIKE_STATEMENT,
   DELETE_STATEMENT,
+  POST_STATEMENT,
+  SET_STATEMENT,
 } from "../types";
 
 const initState = {
@@ -24,6 +26,9 @@ export default function (state = initState, { payload, type }) {
         (statement) => statement.statementId === payload.statementId
       );
       state.statements[index] = payload;
+      if (state.statement.statementId === payload.statementId) {
+        state.statement = payload;
+      }
       return { ...state };
     case DELETE_STATEMENT:
       let index1 = state.statements.findIndex(
@@ -31,6 +36,13 @@ export default function (state = initState, { payload, type }) {
       );
       state.statements.splice(index1, 1);
       return { ...state };
+    case POST_STATEMENT:
+      return {
+        ...state,
+        statements: [payload, ...state.statements],
+      };
+    case SET_STATEMENT:
+      return { ...state, statement: payload };
     default:
       return state;
   }
