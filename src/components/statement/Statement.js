@@ -36,7 +36,6 @@ const Statement = (props) => {
   const dispatch = useDispatch();
 
   const { statement, classes } = props;
-  console.log(statement);
   const {
     body,
     createdAt,
@@ -82,7 +81,11 @@ const Statement = (props) => {
         </PatternButton>
 
         <span>{commentCount} Comments</span>
-        <DialogStatement statementId={statementId} userHandle={userHandle} />
+        <DialogStatement
+          statementId={statementId}
+          userHandle={userHandle}
+          openDialog={props.openDialog}
+        />
       </CardContent>
     </Card>
   );

@@ -82,7 +82,7 @@ const DialogStatement = (props) => {
   );
   return (
     <Fragment>
-      <PatternButton onClick={handleOpen}>
+      <PatternButton tip="show statement" onClick={handleOpen}>
         <UnfoldMore />
       </PatternButton>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">

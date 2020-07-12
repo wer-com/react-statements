@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Home from "./pages/home";
 import login from "./pages/login";
+import user from "./pages/user";
 import signup from "./pages/signup";
 import Navbar from "./components/layout/Navbar";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
@@ -66,6 +67,12 @@ const App = () => {
               <Route exact path="/" component={Home} />
               <AuthRoute exact path="/login" component={login} />
               <AuthRoute exact path="/signup" component={signup} />
+              <Route exact path="/users/:handle" component={user} />
+              <Route
+                exact
+                path="/users/:handle/statement/:statementId"
+                component={user}
+              />
             </Switch>
           </div>
         </BrowserRouter>

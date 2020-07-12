@@ -82,3 +82,13 @@ export const submitComment = (statementId, commentData) => (dispatch) => {
     })
     .catch((err) => dispatch({ type: SET_ERRORS, payload: err.response }));
 };
+
+export const getUserData = (userHandle) => (dispatch) => {
+  dispatch({ type: LOADING_DATA });
+  axios
+    .get(`/user/${userHandle}`)
+    .then((res) => {
+      dispatch({ type: SET_STATEMENTS, payload: res.data.statements });
+    })
+    .catch((err) => dispatch({ type: SET_STATEMENTS, payload: null }));
+};
