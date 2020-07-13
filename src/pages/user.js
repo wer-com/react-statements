@@ -8,9 +8,13 @@ import { useDispatch, useSelector } from "react-redux";
 
 const User = (props) => {
   const data = useSelector((state) => state.data);
+
   const dispatch = useDispatch();
+
   const [profile, setProfile] = useState(null);
+
   const [statementParam, setStatementParam] = useState(null);
+
   useEffect(() => {
     const handle = props.match.params.handle;
     const statementId = props.match.params.statementId;
@@ -23,7 +27,9 @@ const User = (props) => {
       })
       .catch((err) => console.log(err));
   }, []);
+
   const { statements, loading } = data;
+
   const statementMarkUp = loading ? (
     <p>Loading...</p>
   ) : statements === null ? (
