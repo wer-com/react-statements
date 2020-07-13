@@ -5,6 +5,7 @@ import {
   LOADING_USER,
   LIKE_STATEMENT,
   UNLIKE_STATEMENT,
+  MARK_NOTIFICATIONS_READ,
 } from "../types";
 
 const initState = {
@@ -43,6 +44,9 @@ export default function (state = initState, { type, payload }) {
           (like) => like.statementId !== payload.statementId
         ),
       };
+    case MARK_NOTIFICATIONS_READ:
+      state.notifications.forEach((notification) => (notification.read = true));
+      return { ...state };
     default:
       return state;
   }

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import PatternButton from "../../util/PatternButton";
 import HomeIcon from "@material-ui/icons/Home";
-import Notifications from "@material-ui/icons/Notifications";
+import Notifications from "./Notifications";
 import CreateStatement from "../statement/CreateStatement";
 
 const Navbar = () => {
@@ -23,9 +23,7 @@ const Navbar = () => {
                 <HomeIcon color="primary" />
               </PatternButton>
             </Link>
-            <PatternButton tip="Icon">
-              <Notifications color="primary" />
-            </PatternButton>
+            <Notifications color="primary" />
           </Fragment>
         ) : (
           <Fragment>

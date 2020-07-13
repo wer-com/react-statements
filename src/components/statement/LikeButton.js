@@ -30,7 +30,7 @@ const LikeButton = (props) => {
   const likeButton = !user.authenticated ? (
     <PatternButton tip="like">
       <Link to="/login">
-        <FavoriteIcon color="secondary" />
+        <FavoriteBorder color="secondary" />
       </Link>
     </PatternButton>
   ) : likedStatement() ? (

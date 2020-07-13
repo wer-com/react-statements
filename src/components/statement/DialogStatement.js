@@ -24,16 +24,14 @@ import PostComment from "./PostComment";
 
 const DialogStatement = (props) => {
   const [open, setOpen] = useState(false);
+
+  const [oldPath, setOldPath] = useState(null);
+
+  const [newPath, setNewPath] = useState(null);
+
   const UI = useSelector((state) => state.UI);
   const statement = useSelector((state) => state.data.statement);
   const dispatch = useDispatch();
-  const handleOpen = () => {
-    setOpen(true);
-    dispatch(getStatement(props.statementId));
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
   const {
     statementId,
     body,
@@ -45,6 +43,33 @@ const DialogStatement = (props) => {
     comments,
   } = statement;
   const { loading } = UI;
+
+  const handleOpen = () => {
+    let oldPathVar = window.location.pathname;
+    const { userHandle, statementId } = props;
+    const newPathVar = `/users/${userHandle}/statement/${statementId}`;
+    if (oldPathVar === newPathVar) oldPathVar = `/users/${userHandle}`;
+
+    window.history.pushState(null, null, newPathVar);
+
+    setOpen(true);
+    setOldPath(oldPathVar);
+    setNewPath(newPathVar);
+    dispatch(getStatement(props.statementId));
+  };
+  const handleClose = () => {
+    window.history.pushState(null, null, oldPath);
+    setOpen(false);
+    dispatch(clearErrors());
+  };
+
+  useEffect(() => {
+    if (props.openDialog) {
+      handleOpen();
+    }
+    // eslint-disable-next-line
+  }, []);
+
   const dialogMarkUp = loading ? (
     <CircularProgress />
   ) : (
@@ -57,7 +82,7 @@ const DialogStatement = (props) => {
           component={Link}
           color="primary"
           variant="h5"
-          to={`/users${userHandle}`}
+          to={`/users/${userHandle}`}
         >
           @{userHandle}
         </Typography>
