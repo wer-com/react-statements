@@ -27,15 +27,25 @@ const DeleteStatement = (props) => {
       <PatternButton
         tip="Delete Statement"
         onClick={handleOpen}
-        btnClassName="button"
+        btnClassName="button-delete"
       >
         <DeleteOutline color="primary" />
       </PatternButton>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
         <DialogTitle>Are you sure you want to delete Statement ?</DialogTitle>
         <DialogActions>
-          <Button onClick={handleClose}> Cancel </Button>
-          <Button onClick={deleteStatementFunc}> Delete </Button>
+          <Button variant="outlined" color="primary" onClick={handleClose}>
+            {" "}
+            Cancel{" "}
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={deleteStatementFunc}
+          >
+            {" "}
+            Delete{" "}
+          </Button>
         </DialogActions>
       </Dialog>
     </Fragment>

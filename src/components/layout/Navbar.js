@@ -8,22 +8,38 @@ import PatternButton from "../../util/PatternButton";
 import HomeIcon from "@material-ui/icons/Home";
 import Notifications from "./Notifications";
 import CreateStatement from "../statement/CreateStatement";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  title: {
+    flexGrow: 1,
+  },
+}));
 
 const Navbar = () => {
+  const classes = useStyles();
+
   const user = useSelector((state) => state.user);
   const { authenticated } = user;
   return (
-    <AppBar color="secondary">
+    <AppBar color="primary" className={classes.root}>
       <ToolBar className="nav-container">
+        <Typography className={classes.title} variant="h6" noWrap>
+          Statements
+        </Typography>
         {authenticated ? (
           <Fragment>
             <CreateStatement />
             <Link to="/">
               <PatternButton tip="Home">
-                <HomeIcon color="primary" />
+                <HomeIcon color="secondary" />
               </PatternButton>
             </Link>
-            <Notifications color="primary" />
+            <Notifications />
           </Fragment>
         ) : (
           <Fragment>

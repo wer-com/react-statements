@@ -14,18 +14,56 @@ import PatternButton from "../../util/PatternButton";
 import withStyles from "@material-ui/core/styles/withStyles";
 
 const styles = {
-  profileImage: {
-    width: 200,
+  paper: {
+    textAlign: "center",
+    padding: 20,
+  },
+  profile: {
+    "& .image-wrapper": {
+      position: "relative",
+      textAlign: "center",
+      "& button": {
+        position: "absolute",
+        top: "80%",
+        left: "70%",
+      },
+    },
+    "& .profile-image": {
+      width: 200,
+      height: 200,
+      objectFit: "cover",
+      maxWidth: "100%",
+      borderRadius: "50%",
+    },
+    "& .profile-details": {
+      textAlign: "center",
+      "& span, svg": {
+        verticalAlign: "middle",
+      },
+      "& a": {
+        color: "#00bcd4",
+      },
+    },
+    "& hr": {
+      border: "none",
+      margin: "0 0 10px 0",
+    },
+    "& svg.button": {
+      "&:hover": {
+        cursor: "pointer",
+      },
+    },
   },
 };
+
 const StaticProfile = (props) => {
   const { classes } = props;
   const { handle, location, bio, website, createdAt, imageUrl } = props.profile;
   return (
     <Paper className={classes.paper}>
       <div className={classes.profile}>
-        <div className="profile-image">
-          <img src={imageUrl} alt="profile" className={classes.profileImage} />
+        <div className="profile-wrapper">
+          <img src={imageUrl} alt="profile" className="profile-image" />
         </div>
         <hr />
         <div className="profile-details">

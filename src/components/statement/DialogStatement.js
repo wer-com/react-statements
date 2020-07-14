@@ -22,6 +22,22 @@ import Typography from "@material-ui/core/Typography";
 import { getStatement } from "../../actions/dataActions";
 import PostComment from "./PostComment";
 
+const styles = {
+  imageDialog: {
+    height: 200,
+    width: 200,
+    objectFit: "cover",
+  },
+  hr: {
+    border: "none",
+  },
+  a: {
+    color: "#00bcd4",
+  },
+  progress: { position: "absolute" },
+  containerProgress: { textAlign: "center", marginTop: 50, marginBottom: 50 },
+};
+
 const DialogStatement = (props) => {
   const [open, setOpen] = useState(false);
 
@@ -43,6 +59,8 @@ const DialogStatement = (props) => {
     comments,
   } = statement;
   const { loading } = UI;
+
+  const { classes } = props;
 
   const handleOpen = () => {
     let oldPathVar = window.location.pathname;
@@ -71,11 +89,13 @@ const DialogStatement = (props) => {
   }, []);
 
   const dialogMarkUp = loading ? (
-    <CircularProgress />
+    <div className={classes.containerProgress}>
+      <CircularProgress size={180} thickness={1} />
+    </div>
   ) : (
-    <Grid container spacing={16}>
+    <Grid container>
       <Grid item sm={5}>
-        <img src={userImage} alt="profile" />
+        <img src={userImage} alt="profile" className={classes.imageDialog} />
       </Grid>
       <Grid item sm={7}>
         <Typography
@@ -86,21 +106,21 @@ const DialogStatement = (props) => {
         >
           @{userHandle}
         </Typography>
-        <hr />
+        <hr className={classes.hr} />
         <Typography variant="body2" color="textSecondary">
           {dayjs(createdAt).format("h:mm a, MMMM DD YYYY")}
         </Typography>
-        <hr />
+        <hr className={classes.hr} />
         <Typography variant="body1">{body}</Typography>
         <LikeButton statementId={statementId} />
         <span>{likeCount} Likes</span>
         <PatternButton tip="comments">
-          <ChatIcon color="secondary" />
+          <ChatIcon color="primary" />
         </PatternButton>
 
         <span>{commentCount} Comments</span>
       </Grid>
-      <hr />
+      <hr className={classes.hr} />
       <PostComment statementId={statementId} />
       <Comments comments={comments} />
     </Grid>
@@ -112,7 +132,7 @@ const DialogStatement = (props) => {
       </PatternButton>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
         <PatternButton tip="close" onClick={handleClose}>
-          <CloseIcon color="secondary" />
+          <CloseIcon color="primary" />
         </PatternButton>
 
         <DialogContent>{dialogMarkUp}</DialogContent>
@@ -121,4 +141,4 @@ const DialogStatement = (props) => {
   );
 };
 
-export default DialogStatement;
+export default withStyles(styles)(DialogStatement);

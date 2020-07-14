@@ -15,31 +15,38 @@ import store from "./store";
 import { getUserData, logoutUser } from "./actions/userActions";
 import { SET_AUTHENTICATED } from "./types";
 import axios from "axios";
+import deepPurple from "@material-ui/core/colors/purple";
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      light: "#757ce8",
-      main: "#3f50b5",
-      dark: "#002884",
+      light: "#482880",
+      main: "#673ab7",
+      dark: "#8561c5",
       contrastText: "#fff",
     },
     secondary: {
-      light: "#ff7961",
-      main: "#f44336",
-      dark: "#ba000d",
+      light: "#008394",
+      main: "#00bcd4",
+      dark: "#33c9dc",
       contrastText: "#000",
     },
   },
   spreadThis: {
     formContainer: {
       textAlign: "center",
+      marginTop: 130,
     },
-    pageTitle: { margin: "20px auto" },
+    pageTitle: { margin: 10 },
     textField: { margin: 10 },
     button: { margin: 10, padding: 10, position: "relative" },
     customError: { margin: 10 },
     progress: { position: "absolute" },
+    signLink: { textAlign: "right" },
+    avatar: {
+      backgroundColor: "#673ab7",
+      margin: "0 auto",
+    },
   },
 });
 

@@ -20,6 +20,8 @@ const styles = {
   card: {
     display: "flex",
     marginBottom: 20,
+    flexDirection: "row-reverse",
+    justifyContent: "space-between",
   },
   image: {
     minWidth: 200,
@@ -27,6 +29,12 @@ const styles = {
   content: {
     padding: 25,
     objectFit: "cover",
+    position: "relative",
+    "& .button-delete": {
+      position: "absolute",
+      top: 20,
+      right: 0,
+    },
   },
 };
 
@@ -61,15 +69,15 @@ const Statement = (props) => {
         title="profile image"
       />
       <CardContent className={classes.content}>
+        {deleteButton}
         <Typography
           variant="h5"
-          color={"secondary"}
+          color={"primary"}
           component={Link}
           to={`/users/${userHandle}`}
         >
           {userHandle}
         </Typography>
-        {deleteButton}
         <Typography variant="body2" color="textSecondary">
           {dayjs(createdAt).fromNow()}
         </Typography>
@@ -77,7 +85,7 @@ const Statement = (props) => {
         <LikeButton statementId={statementId} />
         <span>{likeCount} Likes</span>
         <PatternButton tip="comments">
-          <ChatIcon color="secondary" />
+          <ChatIcon color="primary" />
         </PatternButton>
 
         <span>{commentCount} Comments</span>

@@ -17,36 +17,41 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ChatIcon from "@material-ui/icons/Chat";
 
+import { connect } from "react-redux";
+
+const style = {};
+
 const Notifications = () => {
-  const [anchorElement, setAnchorElement] = useState(null);
+  const [anchorEl, setanchorEl] = useState(null);
 
   const dispatch = useDispatch();
 
   const notifications = useSelector((state) => state.user.notifications);
-
   const handleOpen = (event) => {
-    setAnchorElement(event.target);
+    setanchorEl(event.target);
   };
 
   const handleClose = (event) => {
-    setAnchorElement(null);
+    setanchorEl(null);
   };
 
   const onMenuOpened = () => {
     let unreadNotificationsIds = notifications
       .filter((notification) => !notification.read)
       .map((notification) => notification.notificationId);
+
     dispatch(markNotificationsRead(unreadNotificationsIds));
   };
 
   let notificationIcon;
 
   if (notifications && notifications.length > 0) {
-    let len = notifications.filter((notification) => notification === false)
-      .length;
+    let len = notifications.filter(
+      (notification) => notification.read === false
+    ).length;
     len > 0
       ? (notificationIcon = (
-          <Badge badgeContent={len} color="primary">
+          <Badge badgeContent={len} color="secondary">
             <NotificationsIcon />
           </Badge>
         ))
@@ -75,7 +80,7 @@ const Notifications = () => {
             {icon}
             <Typography
               component={Link}
-              color="default"
+              color="initial"
               variant="body1"
               to={`/users/${notification.recipient}/statement/${notification.statementId}`}
             >
@@ -92,7 +97,7 @@ const Notifications = () => {
     <React.Fragment>
       <Tooltip title="Notifications">
         <IconButton
-          aria-owns={anchorElement ? "simple-menu" : undefined}
+          aria-owns={anchorEl ? "simple-menu" : undefined}
           aria-haspopup="true"
           onClick={handleOpen}
         >
@@ -100,8 +105,8 @@ const Notifications = () => {
         </IconButton>
       </Tooltip>
       <Menu
-        anchorEl={anchorElement}
-        open={Boolean(anchorElement)}
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
         onClose={handleClose}
         onEntered={onMenuOpened}
       >
@@ -111,4 +116,4 @@ const Notifications = () => {
   );
 };
 
-export default Notifications;
+export default withStyles(style)(Notifications);

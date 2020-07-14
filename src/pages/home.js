@@ -22,11 +22,11 @@ const Home = () => {
   );
   return (
     <Grid container spacing={2}>
-      <Grid item sm={8} xs={12}>
-        {recentStatementsMarkup}
-      </Grid>
       <Grid item sm={4} xs={12}>
         <Profile />
+      </Grid>
+      <Grid item sm={8} xs={12}>
+        {recentStatementsMarkup}
       </Grid>
     </Grid>
   );

@@ -12,14 +12,31 @@ import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
 import PatternButton from "../../util/PatternButton";
 
-const CreateStatement = () => {
+const styles = {
+  createInput: { margin: "10px 0 30px 0" },
+
+  dialogDialog: {
+    position: "relative",
+    "& .btn-exit": { position: "absolute", right: 20, top: 5 },
+  },
+  createBtn: {
+    marginBottom: 20,
+  },
+};
+
+const CreateStatement = (props) => {
   const UI = useSelector((state) => state.UI);
+
   const dispatch = useDispatch();
+
   const [open, setOpen] = useState(false);
+
   const [body, setBody] = useState("");
+
   const handleOpen = () => {
     setOpen(true);
   };
+
   const handleClose = () => {
     dispatch(clearErrors());
     setOpen(false);
@@ -39,18 +56,26 @@ const CreateStatement = () => {
     if (body.trim() !== "") handleClose();
   };
 
+  const { classes } = props;
+
   return (
     <Fragment>
-      <PatternButton
-        tip="Create a Statement"
-        onClick={handleOpen}
-        tip="Create a scream"
-      >
-        <AddIcon color="primary" />
+      <PatternButton tip="Create a Statement" onClick={handleOpen}>
+        <AddIcon color="secondary" />
       </PatternButton>
-      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
-        <PatternButton tip="close" onClick={handleClose}>
-          <CloseIcon color="secondary" />
+      <Dialog
+        className={classes.dialogDialog}
+        open={open}
+        onClose={handleClose}
+        fullWidth
+        maxWidth="sm"
+      >
+        <PatternButton
+          tip="close"
+          onClick={handleClose}
+          btnClassName="btn-exit"
+        >
+          <CloseIcon color="primary" />
         </PatternButton>
         <DialogTitle>Post a statement</DialogTitle>
         <DialogContent>
@@ -66,9 +91,17 @@ const CreateStatement = () => {
               error={errors.body ? true : false}
               helperText={errors.body}
               onChange={inputHandler}
+              className={classes.createInput}
               fullWidth
             />
-            <Button type="submit" variant="contained" disabled={loading}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={loading}
+              className={classes.createBtn}
+              fullWidth
+            >
               {loading ? <CircularProgress /> : null}
               Submit
             </Button>
@@ -78,4 +111,4 @@ const CreateStatement = () => {
     </Fragment>
   );
 };
-export default CreateStatement;
+export default withStyles(styles)(CreateStatement);

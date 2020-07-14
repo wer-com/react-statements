@@ -11,7 +11,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import { useDispatch, useSelector } from "react-redux";
 import PatternButton from "../../util/PatternButton";
 
-const styles = (theme) => ({ ...theme.spreadThis });
+const styles = { textField: { marginBottom: 20 } };
 
 const EditDetails = (props) => {
   const dispatch = useDispatch();
@@ -72,7 +72,7 @@ const EditDetails = (props) => {
       </PatternButton>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
         <DialogTitle>Edit your details</DialogTitle>
-        <DialogContent>
+        <DialogContent className={classes.dialogContent}>
           <form>
             <TextField
               name="bio"
@@ -84,6 +84,7 @@ const EditDetails = (props) => {
               className={classes.textField}
               value={info.bio}
               onChange={changeHandler}
+              fullWidth
             />
             <TextField
               name="location"
@@ -93,23 +94,25 @@ const EditDetails = (props) => {
               className={classes.textField}
               value={info.location}
               onChange={changeHandler}
+              fullWidth
             />
             <TextField
               name="website"
               type="text"
               label="Website"
-              placeholder="Your website"
+              placeholder="Your instagram/website"
               className={classes.textField}
               value={info.website}
               onChange={changeHandler}
+              fullWidth
             />
           </form>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="secondary">
+          <Button variant="outlined" onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={submitHandler} color="secondary">
+          <Button variant="contained" onClick={submitHandler} color="primary">
             Submit
           </Button>
         </DialogActions>

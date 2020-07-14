@@ -54,15 +54,15 @@ const User = (props) => {
   );
   return (
     <Grid container style={{ marginTop: 30 }} spacing={2}>
-      <Grid item sm={8} xs={12}>
-        {statementMarkUp}
-      </Grid>
       <Grid item sm={4} xs={12}>
         {profile === null ? (
           <p>Loading</p>
         ) : (
           <StaticProfile profile={profile} />
         )}
+      </Grid>
+      <Grid item sm={8} xs={12}>
+        {statementMarkUp}
       </Grid>
     </Grid>
   );
